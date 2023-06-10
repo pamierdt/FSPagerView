@@ -34,7 +34,13 @@ open class FSPageControl: UIControl {
             self.setNeedsUpdateIndicators()
         }
     }
-    
+    /// The height to use of page indicators in the page control.
+    @IBInspectable
+    open var itemHeight: CGFloat = 6 {
+        didSet {
+            self.setNeedsUpdateIndicators()
+        }
+    }
     /// The spacing to use between page indicators in the page control.
     @IBInspectable
     open var interitemSpacing: CGFloat = 6 {
@@ -124,7 +130,7 @@ open class FSPageControl: UIControl {
         for (index,value) in self.indicatorLayers.enumerated() {
             let state: UIControl.State = (index == self.currentPage) ? .selected : .normal
             let image = self.images[state]
-            let size = image?.size ?? CGSize(width: diameter, height: diameter)
+            let size = image?.size ?? CGSize(width: diameter, height: itemHeight)
             let origin = CGPoint(x: x - (size.width-diameter)*0.5, y: self.contentView.bounds.midY-size.height*0.5)
             value.frame = CGRect(origin: origin, size: size)
             x = x + spacing + diameter
